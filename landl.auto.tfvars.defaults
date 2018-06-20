@@ -1,0 +1,25 @@
+# vim: ft=terraform
+# VSphere variables that will determine where the resources are deployed
+# These need to be accurate
+vm_datastore         = "lv9cdot03_dev_integration"
+vm_datacenter        = "LV9-IaaS"
+vm_cluster           = "Linux"
+vm_resource_pool     = ""                           # If using a cluster, may omit
+vm_folder            = "tf_landl_01"                # folder name, we can share!
+vm_network           = "DEV-INFRA_SVC-1030_vDS"     # Name of network from vsphere
+vm_disk              = 40                           # Disk Size
+vm_name              = "!_INSERT_NAME_HERE!"        # VM name, must be unique
+
+# Network variables
+# We could include these in with the vm sections above which would allow deploying
+# VMs to different networks in the future.
+domain_name         = "lv9inframbo.com"
+dns_servers         = "10.10.24.75,10.10.24.76"
+net_gateway         = "10.11.129.1"
+network_address     = "10.11.129.0/24"
+ip_address          = "10.11.129.224"
+
+# vsphere credentiails
+vsphere_user          = "!USER!@lv9inframbo.com" 
+vsphere_pass          = "!PASS!"
+vsphere_server        = "dev-vctr-01.lv9inframbo.com"
