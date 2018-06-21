@@ -22,6 +22,6 @@ ip_address          = "192.168.10.253"
 
 # vsphere credentiails
 vsphere_user          = "administrator@vsphere.local" 
-vsphere_pass          = "Newride197^"
+vsphere_pass          = "Password123"
 vsphere_server        = "vc.lp.local"
-win_domain_pass       = "Newride197^"
+win_domain_pass       = "Password123"
