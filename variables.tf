@@ -23,3 +23,4 @@ variable ip_address           {}
 variable vsphere_user         {}
 variable vsphere_pass         {}
 variable vsphere_server       {}
+variable win_domain_pass      {}

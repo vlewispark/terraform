@@ -25,7 +25,7 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "I.T-RH7.3-RAW"
+  name          = "windows2012r2"
   datacenter_id   = "${data.vsphere_datacenter.dc.id}"
 }
 
@@ -36,14 +36,15 @@ resource "vsphere_folder" "folder" {
 }
 
 resource "vsphere_virtual_machine" "vm" {
-  name              = "${var.vm_name}"
+  count = "2"
+  name              = "${var.vm_name}-${count.index +1}"
   resource_pool_id  = "${data.vsphere_resource_pool.pool.id}"
   datastore_id      = "${data.vsphere_datastore.datastore.id}"
   folder            = "${vsphere_folder.folder.path}"
 
-  num_cpus  = "2"
+  num_cpus  = "1"
   memory    = "2048"
-  guest_id  = "rhel7_64Guest"
+  guest_id  = "windows8Server64Guest"
 
   scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
 
@@ -61,13 +62,16 @@ resource "vsphere_virtual_machine" "vm" {
     template_uuid    = "${data.vsphere_virtual_machine.template.id}"
 
     customize {
-      linux_options {
-        host_name    = "${var.vm_name}"
-        domain       = "${var.domain_name}"
+         windows_options {
+           computer_name = "${var.vm_name}-${count.index +1}"
+           join_domain = "lp.local"
+           domain_admin_user =  "administrator"
+           domain_admin_password = "${var.win_domain_pass}"
       }
+    
 
       network_interface {
-        ipv4_address    = "${var.ip_address}"
+        ipv4_address    = "192.168.10.${250 + count.index}"
         ipv4_netmask    = "${element(split("/", var.network_address), 1)}"
       }
       ipv4_gateway      = "${var.net_gateway}"
